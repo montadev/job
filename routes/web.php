@@ -16,6 +16,4 @@ Route::get('/', function () {
 });
 
 
-Route::get('/test', function () {
-    return 'test';
-});
+Route::get('profile','profileController@index')->name('profile');
