@@ -19,3 +19,4 @@ Route::get('/', function () {
 Route::get('profile','profileController@index')->name('profile');
 
 Route::post('profile','profileController@saveProfile')->name('profile');
+Route::post('profile','profileController@saveProfile')->name('profile');
