@@ -122,9 +122,10 @@
     </nav>
     <!-- END Navigation bar -->
 
-    <form action="{{route('profile')}}" method="post">
+    <form action="{{route('profile')}}" method="post" enctype="multipart/form-data">
         @csrf
       <!-- Page header -->
+      
       <header class="page-header">
         <div class="container page-name">
           <h1 class="text-center">Add your resume</h1>
@@ -136,7 +137,7 @@
           <div class="row">
             <div class="col-xs-12 col-sm-4">
               <div class="form-group">
-                <input type="file" class="dropify" data-default-file="demand/img/avatar.jpg">
+                <input type="file" class="dropify" data-default-file="demand/img/avatar.jpg" name="photo">
                 <span class="help-block">Photo</span>
               </div>
             </div>
@@ -149,30 +150,32 @@
               
               <div class="form-group">
                 <label for="contrat">Titre du poste désiré (Exemple Front-end developer)*</label>
-                <input type="text" name="post" class="form-control">
+                <input type="text" name="post_desire" class="form-control">
               </div>
 
                 <div class="form-group">
                   <label for="contrat">Type d'emploi désiré *</label>
                   <select class="form-control" name="contrat" id="contrat">
-                    <option>CDI</option>
-                    <option>CDD</option>
-                    <option>SIPV</option>
-                    <option>Contrat al karama</option>
-                    <option>Freelance</option>
-                     <option>Saisonnier</option>
+                    @if (count($contrats) > 0)
+                        @foreach ($contrats as $contrat)
+                        <option value="{{$contrat->id}}">{{$contrat->contrat}}</option>
+                        @endforeach
+
+                    @endif    
                   </select>
               </div>
 
               <div class="form-group">
                   <label for="category">Catégories *</label>
-                  <select class="form-control" name="category" id="category" multiple>
-                    <option>Informatique</option>
-                    <option>Centres d'appels</option>
-                    <option>Industrie</option>
-                    <option>Ingenierie</option>
-                    <option>Technologie de l'information</option>
-                     <option>Commerce</option>
+                  <select class="form-control" name="domaine" id="category" multiple>
+                    @if (count($chooses) > 0)
+                        @foreach ($chooses as $choose)
+                        <option value="{{$contrat->id}}">
+                          {{$choose->name}}
+                        </option>
+                        @endforeach
+
+                    @endif    
                   </select>
               </div>
 
@@ -204,7 +207,7 @@
                 <div class="form-group col-xs-12 col-sm-12 col-lg-12">
                 <div class="form-check">
 
-                <input class="form-check-input" name="permis" type="checkbox"  id="defaultCheck1">
+                <input class="form-check-input" name="permis" value="oui" type="checkbox"  id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">
                  Permis de conduire
                 </label>
@@ -215,7 +218,7 @@
                <div class="form-group col-xs-12 col-sm-12 col-lg-12">
             <div class="form-check">
 
-            <input class="form-check-input" name="motorise" type="checkbox"  id="defaultCheck2">
+            <input class="form-check-input" name="motorise" value="oui" type="checkbox"  id="defaultCheck2">
             <label class="form-check-label" for="defaultCheck2">
               Motorisé
             </label>
@@ -261,6 +264,21 @@
 
 
                       <div class="col-xs-12 col-sm-8">
+
+
+                         <div class="form-group">
+                  <label for="contrat">Niveau d'étude *</label>
+                  <select class="form-control" name="niveau_etude" >
+                      
+                      @if(count($etudes) >0)
+                       @foreach($etudes as $etude)
+                        <option value="{{$etude->id}}">{{$etude->etude}}</option>
+                        @endforeach 
+
+                        @endif 
+                  </select>
+              </div>
+
                         <div class="form-group">
                            <label for="formation">Diplôme ou spécialité</label>
                           <input type="text" name="diplome[]" class="form-control">
