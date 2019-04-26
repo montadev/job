@@ -251,11 +251,11 @@
             
             <div class="row">
 
-              <div class="col-xs-12">
+              <div class="col-xs-12 item-form-formation">
                 <div class="item-block">
                   <div class="item-form">
   
-                    <button class="btn btn-danger btn-float btn-remove"><i class="ti-close"></i></button>
+                    
 
                     <div class="row">
 
@@ -293,47 +293,11 @@
                 </div>
               </div>
 
-              <div class="col-xs-12 duplicateable-content">
-                <div class="item-block">
-                  <div class="item-form">
-  
-                    <button class="btn btn-danger btn-float btn-remove"><i class="ti-close"></i></button>
-
-                    <div class="row">
-
-                      <div class="col-xs-12 col-sm-8">
-                        <div class="form-group">
-                           <label for="formation">Diplôme ou spécialité</label>
-                          <input type="text" name="diplome[]" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                          <label for="formation">Université ou établissement</label>
-                          <input type="text" name="universite[]" class="form-control">
-                        </div>
-
-                         <div class="form-group">
-                          <div class="input-group">
-                            <span class="input-group-addon">De</span>
-                            <input type="text" name="from[]" class="form-control date_form_mon" placeholder="AAAA-mm-jj">
-                            <span class="input-group-addon">A</span>
-                            <input type="text" name="to[]" class="form-control date_form_mon" placeholder="AAAA-mm-jj">
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <textarea class="form-control" name="desc_form[]" rows="3" placeholder="Short description"></textarea>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
+             
 
               <div class="col-xs-12 text-center">
                 <br>
-                <button class="btn btn-primary btn-duplicator">Ajouter Formation</button>
+                <button class="btn btn-primary btn-duplicator-formation">Ajouter Formation</button>
               </div>
 
 
@@ -507,61 +471,12 @@
   </body>
 </html>
 
+<!-- add experience add delete it  -->
+<script type="text/javascript" src="{{asset('demand/js/experience.js')}}"></script>
+
+<!-- add formation add delete it  -->
+<script type="text/javascript" src="{{asset('demand/js/formation.js')}}"></script>
+<!-- initialisation datepicker lors chargement de la page  -->
+<script type="text/javascript" src="{{asset('demand/js/iniDatepicker.js')}}"></script>
 
 
-<script>
-
-  /****************** duplicate experience *******************************/
-  $('.btn-duplicator-ex').click(function(Event){
-
-
-       Event.preventDefault();
-       
-       
-
-       
-  
-  $('.item-form-exp').append('<div class="item-block"><button class="test-center sup">Supprimer</button><div class="item-form "><div class="row"><div class="col-xs-12 col-sm-8"><div class="form-group"><label>Entreprise</label><input type="text" name="entreprise[]" class="form-control"></div><div class="form-group"><label>Position</label><input type="text" name="position[]" class="form-control"></div><div class="form-group"><div class="input-group"><span class="input-group-addon">De</span><input type="text" name="from_post[]" class="form-control date_form_mon" placeholder="AAAA-mm-jj"><span class="input-group-addon">A</span><input type="text" name="to_post[]" class="form-control date_form_mon" placeholder="AAAA-mm-jj"></div></div></div><div class="col-xs-12"><div class="form-group"><div class="form-group"><textarea class="form-control" name="desc_post[]" rows="3" placeholder="Short description"></textarea></div></div> </div></div></div></div>');
-
-    var date_input=$('.date_form_mon'); //our date input has the name "date"
-       
-      var options={
-        format: 'yyyy-mm-dd',
-        todayHighlight: true,
-        autoclose: true,
-        language: "fr"
-      };
-      date_input.datepicker(options);
-
-
-
-
-  });
-
-/****** add event listner pour supprimer un experience ********/
-    $(document).on('click', '.sup',function(event){
-
-       
-        event.preventDefault();
-
-
-       $(this).parent().remove();
-
-    });
-
-
-/******* initialisation data picker hors chargement de la page *******/
-    $(document).ready(function(){
-
-         
-      var date_input=$('.date_form_mon'); //our date input has the name "date"
-      
-      var options={
-        format: 'yyyy-mm-dd',
-        todayHighlight: true,
-        autoclose: true,
-        language: "fr"
-      };
-      date_input.datepicker(options);
-    })
-</script>

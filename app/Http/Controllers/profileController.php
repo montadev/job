@@ -15,7 +15,7 @@ class profileController extends Controller
      public function saveProfile(Request $request){
 
      	 
-     	  dump($request->diplome);
+     	  dump($request->entreprise);
      	  
      }
 }
