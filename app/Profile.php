@@ -32,14 +32,15 @@ class Profile extends Model
         return $this->hasMany('App\Experience');
     }
 
-    public function categories()
-    {
-        return $this->hasMany('App\Category');
-    }
-
 
     public function contract()
     {
         return $this->belongsTo('App\Contract');
+    }
+
+
+     public function chooses()
+    {
+        return $this->belongsToMany('App\Choose');
     }
 }

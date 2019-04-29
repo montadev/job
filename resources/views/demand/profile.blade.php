@@ -14,15 +14,21 @@
     <link href="demand/css/app.min.css" rel="stylesheet">
     <link href="demand/vendors/summernote/summernote.css" rel="stylesheet">
     <link href="demand/css/custom.css" rel="stylesheet">
+    <link href="demand/css/customjob.css" rel="stylesheet">
+
     <!-- date piker cdn -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Oswald:100,300,400,500,600,800%7COpen+Sans:300,400,500,600,700,800%7CMontserrat:400,700' rel='stylesheet' type='text/css'>
 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="icon" href="demand/img/favicon.ico">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </head>
 
   <body class="nav-on-header smart-nav">
@@ -137,25 +143,45 @@
           <div class="row">
             <div class="col-xs-12 col-sm-4">
               <div class="form-group">
-                <input type="file" class="dropify" data-default-file="demand/img/avatar.jpg" name="photo">
+                <input type="file" class="dropify{{ $errors->has('email') ? ' is-invalid' : '' }}" data-default-file="demand/img/avatar.jpg" name="photo">
                 <span class="help-block">Photo</span>
+
+                @if ($errors->has('photo'))
+
+                <div class="invalid-feedback error_profile"  role="alert">
+
+                    {{ $errors->first('photo') }}
+                </div>
+                @endif
               </div>
             </div>
 
             <div class="col-xs-12 col-sm-8">
               <label for="contrat">Votre Votre Cv *</label>
               <div class="form-group">
-                <input type="file" name="cv" class="form-control input-lg">
+                <input type="file" name="cv" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} input-lg">
+                @if ($errors->has('cv'))
+
+                <div class="invalid-feedback error_profile"  role="alert">
+                    {{ $errors->first('cv') }}
+                </div>
+                @endif
               </div>
               
               <div class="form-group">
                 <label for="contrat">Titre du poste désiré (Exemple Front-end developer)*</label>
-                <input type="text" name="post_desire" class="form-control">
+                <input type="text" name="post_desire" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}">
+                @if ($errors->has('post_desire'))
+
+                <div class="invalid-feedback error_profile"  role="alert">
+                    {{ $errors->first('post_desire') }}
+                </div>
+                @endif
               </div>
 
                 <div class="form-group">
                   <label for="contrat">Type d'emploi désiré *</label>
-                  <select class="form-control" name="contrat" id="contrat">
+                  <select class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="contrat" id="contrat">
                     @if (count($contrats) > 0)
                         @foreach ($contrats as $contrat)
                         <option value="{{$contrat->id}}">{{$contrat->contrat}}</option>
@@ -163,25 +189,55 @@
 
                     @endif    
                   </select>
+                  @if ($errors->has('contrat'))
+
+                <div class="invalid-feedback error_profile" style="color:red;" role="alert">
+                    {{ $errors->first('contrat') }}
+                </div>
+                @endif
               </div>
 
               <div class="form-group">
-                  <label for="category">Catégories *</label>
-                  <select class="form-control" name="domaine" id="category" multiple>
+                  <label for="category">Catégories d'emploi *</label>
+                  <select class="form-control" name="domaine[]" id="category" multiple>
                     @if (count($chooses) > 0)
                         @foreach ($chooses as $choose)
-                        <option value="{{$contrat->id}}">
+                        <option value="{{$choose->id}}">
                           {{$choose->name}}
                         </option>
                         @endforeach
 
                     @endif    
                   </select>
+
+                  @if ($errors->has('domaine'))
+
+                <div class="invalid-feedback error_profile" role="alert">
+                    {{ $errors->first('domaine') }}
+                </div>
+                @endif
+              </div>
+
+               <div class="form-group">
+                <label for="category">Objectifs *</label>
+                <textarea class="form-control" name="objectifs" rows="3" ></textarea>
+                @if ($errors->has('objectifs'))
+
+                <div class="invalid-feedback error_profile"  role="alert">
+                    {{ $errors->first('objectifs') }}
+                </div>
+                @endif
               </div>
 
               <div class="form-group">
                 <label for="category">Compétences *</label>
                 <textarea class="form-control" name="competences" rows="3" ></textarea>
+                @if ($errors->has('competences'))
+
+                <div class="invalid-feedback error_profile"  role="alert">
+                    {{ $errors->first('competences') }}
+                </div>
+                @endif
               </div>
 
               <hr class="hr-lg">
@@ -193,6 +249,13 @@
                   <div class="input-group input-group-sm">
                     <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
                     <input type="text" class="form-control" name="adresse" placeholder="adresse *">
+
+                    @if ($errors->has('adresse'))
+
+                <div class="invalid-feedback error_profile"  role="alert">
+                    {{ $errors->first('adresse') }}
+                </div>
+                @endif
                   </div>
                 </div>
                
@@ -201,6 +264,12 @@
                   <div class="input-group input-group-sm">
                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                     <input type="text" name="tel" class="form-control" placeholder="Tel *">
+                    @if ($errors->has('tel'))
+
+                <div class="invalid-feedback error_profile"  role="alert">
+                    {{ $errors->first('tel') }}
+                </div>
+                @endif
                   </div>
                 </div>
                  <h6>Information Suplémentaire</h6>
@@ -498,3 +567,4 @@
 <script type="text/javascript" src="{{asset('demand/js/iniDatepicker.js')}}"></script>
 
 
+ @include('sweet::alert')

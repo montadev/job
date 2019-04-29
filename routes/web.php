@@ -1,5 +1,5 @@
 <?php
-
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +14,20 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashbord', function () {
+    return view('demand.dashbord');
+});
+
+
+  Route::get('/test', function () {
+    
+     $user=User::find(1);
+     dd($user->profile->cv);
+});
+
+
+Route::get('/resume','profileController@getResume')->name('resume');
 
 
 Route::get('profile','profileController@index')->name('profile');

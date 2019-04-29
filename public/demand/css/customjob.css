@@ -1,0 +1,42 @@
+.error_profile{
+
+color:white;
+font-family:'OpenSans-Regular', sans-serif;
+background-color:#ea5959;
+font-size:14px;
+padding: 5px;
+}
+
+/* start education block */
+#education .section-header h2{
+	text-align: center;
+     margin-bottom: 48px;
+     margin-top: 48px;
+    color: #55595c;
+    text-transform: capitalize;
+}
+
+
+.block-education{
+
+	background-color: white;
+	padding: 20px 30px;
+    border-bottom: 1px solid #f6f6f6;
+}
+
+/** start experince block ***/
+
+#experience .section-header h2{
+     text-align: center;
+     margin-top: 48px;
+     margin-bottom: 48px;
+    color: #55595c;
+    text-transform: capitalize;
+
+}
+
+.block-experience{
+	background-color: white;
+	padding: 20px;
+}
+

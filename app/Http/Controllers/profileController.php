@@ -8,7 +8,11 @@ use App\Etude;
 use App\Profile;
 use App\Formation;
 use App\Experience;
+use App\Category;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\profleRequest;
+use Alert;
 
 class profileController extends Controller
 {
@@ -33,9 +37,10 @@ class profileController extends Controller
      	                               ->with('etudes',$etudes);
      }
 
-     public function saveProfile(Request $request){
+     public function saveProfile(profleRequest $request){
 
      	 
+     	    
      	  
      	   $profile=new Profile();
      	   
@@ -44,7 +49,7 @@ class profileController extends Controller
            $newPhtoName=$this->savePhoto($request);
            $profile->cv=$newCvName;
            $profile->photo=$newPhtoName;
-
+           $profile->description=$request->objectifs;
      	   $profile->post=$request->post_desire;
      	   $profile->competence=$request->competences;
      	   $profile->adress=$request->adresse;
@@ -56,9 +61,23 @@ class profileController extends Controller
      	   $profile->etude_id=$request->niveau_etude;
            
            $profile->save(); 
+           
+            
+           
+           
+
+           $profile->chooses()->attach($request->domaine);
+
+
+          // will be replaced by auth  don't forget that//
            $last_id=$profile->id;
            $this->saveFormation($request,$last_id);
            $this->saveExperience($request,$last_id);
+
+             Alert::success('Votre Profile a éte bien enregistré');
+
+
+              return redirect()->back();
              	  
      }
 
@@ -134,6 +153,16 @@ class profileController extends Controller
            }
 
     }
+
+
+   public function getResume()
+   {
+
+      $user=User::find(1);
+
+      return view('demand.resume')->with('user',$user)
+                                  ->render();
+   }
 
 
 }
