@@ -22,6 +22,10 @@ padding: 5px;
 	background-color: white;
 	padding: 20px 30px;
     border-bottom: 1px solid #f6f6f6;
+    margin-bottom: 7px;
+    color:#a2a2a2;
+    border: 1px solid ;
+    box-shadow: 2px 2px 2px #a2a2a2;
 }
 
 /** start experince block ***/
@@ -33,10 +37,28 @@ padding: 5px;
     color: #55595c;
     text-transform: capitalize;
 
+
 }
 
 .block-experience{
 	background-color: white;
-	padding: 20px;
+    padding: 20px 30px;
+    border-bottom: 1px solid #f6f6f6;
+    margin-bottom: 7px;
+    color:#a2a2a2;
+    border: 1px solid ;
+    box-shadow: 2px 2px 2px #a2a2a2;
+}
+
+/** champs a complete par user pour le profil **/
+.complete{
+
+   color:#ea5959;
+   font-weight: bold;
+}
+
+.formation-expercience{
+    color:#ea5959;
+   font-weight: bold;
 }
 

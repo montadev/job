@@ -23,15 +23,19 @@ class profleRequest extends FormRequest
      */
     public function rules()
     {
+
+
         return [
-            'photo'=>'mimes:jpeg,jpg,png|required|max:10000',
+            'photo'=>'mimes:jpeg,jpg,png|max:10000',           
             'cv'=>'mimes:pdf|required|max:10000',
             'post_desire'=>'required',
             'domaine'=>'required',
             'competences'=>"required",
             'adresse'=>"required",
             'objectifs'=>"required",
-           // 'tel'=>"required|numeric|min:8|max:8",
+            'tel'=>"required|digits:8",
+
+           
         ];
     }
 
@@ -50,9 +54,7 @@ class profleRequest extends FormRequest
                     'competences.required' => 'Veuillez au moins une competence',
                     'adresse.required' => 'Veuillez Saisir votre adresse',
                     'tel.required' => 'Veuillez Saisir votre telephone',
-                    'tel.numeric' => 'Votre telephone doit etre un nombre',
-                    'tel.min' => 'Votre telephone doit etre contenir 8 nombres',
-                    'tel.max' => 'Votre telephone doit etre contenir 8 nombres',
+                    'tel.digits' => 'Votre telephone doit contenir 8 nombres',
                     'objectifs.required' => 'Veuillez saisir votre Objectif',
 
                 ];

@@ -23,13 +23,17 @@ Route::get('/dashbord', function () {
   Route::get('/test', function () {
     
      $user=User::find(1);
-     dd($user->profile->cv);
+     dd($user->profile->formations);
 });
 
+  /*** ****/
 
-Route::get('/resume','profileController@getResume')->name('resume');
+Route::get('/resume','profileController@resume')->name('resume');  
 
-
+Route::get('/dashbord','profileController@dashbord')->name('dashbord');
+/*****  show create profile ****/
 Route::get('profile','profileController@index')->name('profile');
-
-Route::post('profile','profileController@saveProfile')->name('profile');
+/*****  show update profile ****/
+Route::get('updateProfile','profileController@showUpdateProfile')->name('showUpdateProfile');
+/*****  save create profile ****/
+Route::post('profile','profileController@saveUpdateProfile')->name('profile');

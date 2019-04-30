@@ -110,6 +110,7 @@
 
           <div class="row">
             <div class="col-xs-12 col-sm-4">
+
               <div class="form-group">
                 <input type="file" class="dropify{{ $errors->has('email') ? ' is-invalid' : '' }}" data-default-file="demand/img/avatar.jpg" name="photo">
                 <span class="help-block">Photo</span>
@@ -138,7 +139,7 @@
               
               <div class="form-group">
                 <label for="contrat">Titre du poste désiré (Exemple Front-end developer)*</label>
-                <input type="text" name="post_desire" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}">
+                <input type="text" name="post_desire" value="{{$user->profile->post}}" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}">
                 @if ($errors->has('post_desire'))
 
                 <div class="invalid-feedback error_profile"  role="alert">
@@ -152,7 +153,12 @@
                   <select class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="contrat" id="contrat">
                     @if (count($contrats) > 0)
                         @foreach ($contrats as $contrat)
+                          @if($user->profile->contract_id==$contrat->id)
+                        <option value="{{$contrat->id}}" checked >{{$contrat->contrat}}</option>
+                         @else
                         <option value="{{$contrat->id}}">{{$contrat->contrat}}</option>
+
+                         @endif
                         @endforeach
 
                     @endif    
@@ -188,7 +194,9 @@
 
                <div class="form-group">
                 <label for="category">Objectifs *</label>
-                <textarea class="form-control" name="objectifs" rows="3" ></textarea>
+                <textarea class="form-control" name="objectifs" rows="3">
+                  {{$user->profile->description}}
+                </textarea>
                 @if ($errors->has('objectifs'))
 
                 <div class="invalid-feedback error_profile"  role="alert">
@@ -199,7 +207,9 @@
 
               <div class="form-group">
                 <label for="category">Compétences *</label>
-                <textarea class="form-control" name="competences" rows="3" ></textarea>
+                <textarea class="form-control" name="competences" rows="3" >
+                  {{$user->profile->competence}}
+                </textarea>
                 @if ($errors->has('competences'))
 
                 <div class="invalid-feedback error_profile"  role="alert">
@@ -216,7 +226,7 @@
                 <div class="form-group col-xs-12 col-sm-6">
                   <div class="input-group input-group-sm">
                     <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                    <input type="text" class="form-control" name="adresse" placeholder="adresse *">
+                    <input type="text" class="form-control" value="{{$user->profile->adress}}" name="adresse" placeholder="adresse *">
 
                     @if ($errors->has('adresse'))
 
@@ -231,7 +241,7 @@
                 <div class="form-group col-xs-12 col-sm-6">
                   <div class="input-group input-group-sm">
                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                    <input type="text" name="tel" class="form-control" placeholder="Tel *">
+                    <input type="text" name="tel" value="{{$user->profile->tel}}" class="form-control" placeholder="Tel *">
                     @if ($errors->has('tel'))
 
                 <div class="invalid-feedback error_profile"  role="alert">
@@ -243,8 +253,11 @@
                  <h6>Information Suplémentaire</h6>
                 <div class="form-group col-xs-12 col-sm-12 col-lg-12">
                 <div class="form-check">
-
+                @if($user->profile->permis!=NULL)
+                <input class="form-check-input" name="permis" checked value="oui" type="checkbox"  id="defaultCheck1">
+                 @else
                 <input class="form-check-input" name="permis" value="oui" type="checkbox"  id="defaultCheck1">
+                 @endif
                 <label class="form-check-label" for="defaultCheck1">
                  Permis de conduire
                 </label>
@@ -254,8 +267,11 @@
 
                <div class="form-group col-xs-12 col-sm-12 col-lg-12">
             <div class="form-check">
-
+             @if($user->profile->motorise!=NULL)
             <input class="form-check-input" name="motorise" value="oui" type="checkbox"  id="defaultCheck2">
+            @else
+            <input class="form-check-input" name="motorise" value="oui" type="checkbox"  id="defaultCheck2">
+            @endif
             <label class="form-check-label" for="defaultCheck2">
               Motorisé
             </label>
@@ -295,53 +311,58 @@
                 <div class="item-block">
                   <div class="item-form">
   
-                    
-
-                    <div class="row">
-
-
-                      <div class="col-xs-12 col-sm-8">
-
-
-                         <div class="form-group">
+                    <div class="form-group">
                   <label for="contrat">Niveau d'étude *</label>
                   <select class="form-control" name="niveau_etude" >
                       
-                      @if(count($etudes) >0)
+                    @if(count($etudes) >0)
+
                        @foreach($etudes as $etude)
-                        <option value="{{$etude->id}}">{{$etude->etude}}</option>
+                          @if($user->profile->etude_id==$etude->id)
+                        <option value="{{$etude->id}}" checked>{{$etude->etude}}</option>
+                         @else
+                         <option value="{{$etude->id}}">{{$etude->etude}}</option>
+                         @endif
                         @endforeach 
 
-                        @endif 
+                     @endif 
                   </select>
               </div>
 
+                    <div class="row">
+
+                      @foreach($user->profile->formations as $formation)
+                      <div class="col-xs-12 col-sm-8">
+
                         <div class="form-group">
                            <label for="formation">Diplôme ou spécialité</label>
-                          <input type="text" name="diplome[]" class="form-control">
+                          <input type="text" value="{{$formation->diplome}}" name="diplome[]" class="form-control">
                         </div>
 
 
                         <div class="form-group">
                           <label for="formation">Université ou établissement</label>
-                          <input type="text" name="universite[]" class="form-control">
+                          <input type="text" value="{{$formation->universite}}" name="universite[]" class="form-control">
                         </div>
 
                         <div class="form-group">
                           <div class="input-group">
                             <span class="input-group-addon">De</span>
-                            <input type="text"  name="from[]" class="form-control date_form_mon" placeholder="AAAA-mm-jj">
+                            <input type="text"  value="{{$formation->date_debut}}" name="from[]" class="form-control date_form_mon" placeholder="AAAA-mm-jj">
                             <span class="input-group-addon">A</span>
-                            <input type="text" name="to[]" class="form-control date_form_mon" placeholder="AAAA-mm-jj">
+                            <input type="text" name="to[]" value="{{$formation->date_fin}}" class="form-control date_form_mon" placeholder="AAAA-mm-jj">
                           </div>
                         </div>
 
                          <div class="form-group">
-                          <textarea class="form-control" name="desc_form[]" rows="3" placeholder="Short description"></textarea>
+                          <textarea class="form-control" name="desc_form[]" rows="3" placeholder="Short description">{{$formation->description}}</textarea>
                         </div>
 
 
                       </div>
+
+                      @endforeach
+
                     </div>
 
                   </div>
@@ -379,35 +400,37 @@
 
                     <div class="row">
                       
-
+            @foreach($user->profile->experiences as $experience)
                       <div class="col-xs-12 col-sm-8">
                         <div class="form-group">
                           <label>Entreprise</label>
-                          <input type="text" name="entreprise[]" class="form-control">
+                          <input type="text" value="{{$experience->entreprise}}" name="entreprise[]" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label>Position</label>
-                          <input type="text" name="position[]" class="form-control">
+                          <input type="text" name="position[]" value="{{$experience->position}}" class="form-control">
                         </div>
 
                         <div class="form-group">
                           <div class="input-group">
                             <span class="input-group-addon">De</span>
-                            <input type="text" name="from_post[]" class="form-control date_form_mon" 
+                            <input type="text" value="{{$experience->date_debut}}" name="from_post[]" class="form-control date_form_mon" 
                             placeholder="AAAA-mm-jj">
                             <span class="input-group-addon">A</span>
-                            <input type="text" name="to_post[]" class="form-control date_form_mon" 
+                            <input type="text" value="{{$experience->date_fin}}" name="to_post[]" class="form-control date_form_mon" 
                             placeholder="AAAA-mm-jj">
                           </div>
                         </div>
 
                       </div>
 
+                      @endforeach
+
                       <div class="col-xs-12">
                         <div class="form-group">
                           <div class="form-group">
-                          <textarea class="form-control" name="desc_post[]" rows="3" placeholder="Short description"></textarea>
+                          <textarea class="form-control" name="desc_post[]" rows="3" placeholder="Short description">{{$experience->description}}</textarea>
                         </div>
                         </div>
                       </div>

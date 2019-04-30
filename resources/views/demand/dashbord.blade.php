@@ -42,7 +42,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{route('dashbord')}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -67,14 +67,33 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" id="resume" >
+        <a class="nav-link collapsed" href="{{route('resume')}}" id="resume" >
           <i class="fas fa-fw fa-folder"></i>
           <span>Profile</span>
         </a>
        
       </li>
-     
 
+       @if($profile_status==NULL)
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('profile')}}" id="resume" >
+          <i class="fas fa-fw fa-folder"></i>
+                
+          <span>Créer votre cv</span>
+        </a>
+       
+      </li>
+       @else
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('showUpdateProfile')}}" id="resume" >
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Modifier Votre Cv</span>
+        </a>
+       
+      </li>
+     
+       @endif
      
 
      
@@ -92,10 +111,11 @@
 
       <!-- Main Content -->
       <div id="content">
-
+        
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
+               
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
@@ -281,7 +301,23 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800">
+              @if($profile_status==NULL)
+           <h3 class="complete">Veuillez créer votre profil
+
+             <a href="{{route('profile')}}">
+          
+                
+             <span>>>Créer votre cv</span>
+        </a>
+           </h3>
+
+
+            
+       
+      
+              @endif
+             </h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
 
@@ -437,9 +473,9 @@
   <script src="demand/dashbord/js/demo/chart-pie-demo.js"></script>
 
   
-
+  <!--
   <script type="text/javascript" src="{{asset('demand/js/showresume.js')}}"></script>
- 
+   -->
 </body>
 
 </html>
